@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Onboarding</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+padding:30px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+h1{
+color:#003366;
+margin-bottom:25px;
+}
+
+.section{
+margin-bottom:30px;
+}
+
+.section h2{
+margin-bottom:15px;
+color:#003366;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+input,
+select{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.btn{
+background:#F4C542;
+color:#003366;
+border:none;
+padding:14px 25px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.btn:hover{
+opacity:.9;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Complete Employee Profile</h1>
+
+<div class="section">
+<h2>Personal Information</h2>
+
+<div class="grid">
+<input type="text" id="fullName" placeholder="Full Name" readonly>
+<input type="text" id="address" placeholder="Address">
+</div>
+</div>
+
+<div class="section">
+<h2>Emergency Contact</h2>
+
+<div class="grid">
+<input type="text" id="emergencyName" placeholder="Contact Name">
+<input type="text" id="emergencyNumber" placeholder="Contact Number">
+</div>
+</div>
+
+<div class="section">
+<h2>Employment Information</h2>
+
+<div class="grid">
+<input type="text" id="department" placeholder="Department">
+
+<input type="text" id="position" placeholder="Position">
+
+<select id="employmentStatus">
+<option>Regular</option>
+<option>Probationary</option>
+<option>Contractual</option>
+</select>
+
+<input type="date" id="dateHired">
+</div>
+</div>
+
+<div class="section">
+<h2>Government IDs</h2>
+
+<div class="grid">
+<input type="text" id="sss" placeholder="SSS">
+<input type="text" id="philhealth" placeholder="PhilHealth">
+<input type="text" id="pagibig" placeholder="Pag-IBIG">
+<input type="text" id="tin" placeholder="TIN">
+</div>
+</div>
+
+<div class="section">
+<h2>Leave Credits Assignment</h2>
+
+<div class="grid">
+
+<div>
+<label><strong>Vacation Leave (VL)</strong></label>
+<p style="font-size:12px;color:#666;margin-bottom:5px;">
+For planned vacations, personal errands, and rest days.
+</p>
+<input type="number" id="vl" value="15">
+</div>
+
+<div>
+<label><strong>Sick Leave (SL)</strong></label>
+<p style="font-size:12px;color:#666;margin-bottom:5px;">
+Used when employee is sick or medically unable to work.
+</p>
+<input type="number" id="sl" value="15">
+</div>
+
+<div>
+<label><strong>Emergency Leave (EL)</strong></label>
+<p style="font-size:12px;color:#666;margin-bottom:5px;">
+For urgent family matters, accidents, or emergencies.
+</p>
+<input type="number" id="el" value="3">
+</div>
+
+<div>
+<label><strong>Birthday Leave (BL)</strong></label>
+<p style="font-size:12px;color:#666;margin-bottom:5px;">
+Paid leave that may be used on employee's birthday.
+</p>
+<input type="number" id="bl" value="1">
+</div>
+
+</div>
+</div>
+<button class="btn" onclick="saveProfile()">
+Complete Employee Setup
+</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://tuihpvykuqbqnfyfepql.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_ANON_KEY";
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const params = new URLSearchParams(window.location.search);
+const userId = params.get("id");
+
+loadEmployee();
+
+async function loadEmployee(){
+
+    const { data, error } = await db
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById("fullName").value =
+        data.full_name || "";
+
+    document.getElementById("department").value =
+        data.department || "";
+}
+
+async function saveProfile(){
+
+    const payload = {
+
+        user_id: Number(userId),
+
+        address:
+        document.getElementById("address").value,
+
+        emergency_contact_name:
+        document.getElementById("emergencyName").value,
+
+        emergency_contact_number:
+        document.getElementById("emergencyNumber").value,
+
+        position:
+        document.getElementById("position").value,
+
+        employment_status:
+        document.getElementById("employmentStatus").value,
+
+        date_hired:
+        document.getElementById("dateHired").value,
+
+        sss:
+        document.getElementById("sss").value,
+
+        philhealth:
+        document.getElementById("philhealth").value,
+
+        pagibig:
+        document.getElementById("pagibig").value,
+
+        tin:
+        document.getElementById("tin").value,
+
+        vacation_leave:
+        Number(document.getElementById("vl").value),
+
+        sick_leave:
+        Number(document.getElementById("sl").value),
+
+        emergency_leave:
+        Number(document.getElementById("el").value),
+
+        birthday_leave:
+        Number(document.getElementById("bl").value),
+
+        profile_completed: true
+    };
+
+    const { error } = await db
+    .from("employee_profiles")
+    .upsert(payload);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    alert("Employee Profile Completed");
+
+    window.location.href =
+        "Hr_Dashboard.html";
+}
+
+</script>
+
+</body>
+</html>
