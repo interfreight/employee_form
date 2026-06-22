@@ -198,10 +198,11 @@ async function loadEmployee(){
     .eq("id", userId)
     .single();
 
-    if(error){
-        alert(error.message);
-        return;
-    }
+   if(error){
+    console.error(error);
+    alert(JSON.stringify(error));
+    return;
+}
 
     document.getElementById("fullName").value =
         data.full_name || "";
