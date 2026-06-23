@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HR Employee Dashboard</title>
+<title>Interfreight HR Employee Dashboard</title>
 <style>
-body{font-family:Segoe UI,sans-serif;background:#f4f7fb;padding:20px}
-.container{max-width:1200px;margin:auto;background:#fff;padding:25px;border-radius:12px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-input,select,textarea{padding:10px;width:100%;border:1px solid #ccc;border-radius:8px}
-.section{margin:20px 0}
-.section h3{color:#003366}
-.dynamic-row{display:grid;grid-template-columns:repeat(4,1fr) 80px;gap:10px;margin-bottom:10px}
-.btn{padding:10px 15px;border:none;border-radius:8px;cursor:pointer}
-.add{background:#28a745;color:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{background:#eef3fb;padding:20px}
+.container{max-width:1400px;margin:auto;background:#fff;border-radius:18px;padding:25px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
+.header{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#1F4E9D,#4C79C8);color:#fff;padding:20px;border-radius:15px}
+.logo{width:90px;height:90px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#1F4E9D}
+.section{margin-top:25px}
+.section h2{color:#1F4E9D;border-left:5px solid #F4C542;padding-left:10px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d8d8d8;border-radius:10px}
+.dynamic-row{display:grid;grid-template-columns:repeat(4,1fr) 90px;gap:10px;margin-bottom:10px}
+.btn{padding:10px 15px;border:none;border-radius:10px;cursor:pointer}
+.add{background:#1F4E9D;color:#fff}
 .remove{background:#dc3545;color:#fff}
-.save{background:#F4C542;color:#003366;width:100%;font-weight:bold}
+.save{background:#F4C542;color:#003366;font-weight:bold;width:100%;padding:15px;font-size:16px}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>One-Page HR Employee Dashboard</h1>
 
-<div class="section"><h3>Personal Information</h3>
+<div class="header">
+<div class="logo">IF</div>
+<div>
+<h1>INTERFREIGHT HR DASHBOARD</h1>
+<p>Complete Employee Profile Setup</p>
+</div>
+</div>
+
+<div class="section">
+<h2>Personal Information</h2>
 <div class="grid">
 <input placeholder="Employee Number">
 <input placeholder="Full Name">
-<input placeholder="Gender">
+<select><option>Male</option><option>Female</option></select>
 <input type="date">
 <input placeholder="Place of Birth">
 <input placeholder="Nationality">
@@ -36,9 +47,11 @@ input,select,textarea{padding:10px;width:100%;border:1px solid #ccc;border-radiu
 <input placeholder="Spouse Name">
 <input placeholder="Father Name">
 <input placeholder="Mother Name">
-</div></div>
+</div>
+</div>
 
-<div class="section"><h3>Contact Information</h3>
+<div class="section">
+<h2>Contact Information</h2>
 <div class="grid">
 <input placeholder="Mobile Number">
 <input placeholder="Personal Email">
@@ -48,43 +61,91 @@ input,select,textarea{padding:10px;width:100%;border:1px solid #ccc;border-radiu
 <textarea placeholder="Permanent Address"></textarea>
 </div>
 
-<div class="section"><h3>Dependents</h3>
+<div class="section">
+<h2>Emergency Contact</h2>
+<div class="grid">
+<input placeholder="Emergency Contact Name">
+<input placeholder="Emergency Contact Number">
+</div>
+</div>
+
+<div class="section">
+<h2>Employment Information</h2>
+<div class="grid">
+<input placeholder="Department">
+<input placeholder="Position">
+<select><option>Regular</option><option>Probationary</option><option>Contractual</option></select>
+<input type="date">
+</div>
+</div>
+
+<div class="section">
+<h2>Government IDs</h2>
+<div class="grid">
+<input placeholder="SSS">
+<input placeholder="PhilHealth">
+<input placeholder="Pag-IBIG">
+<input placeholder="TIN">
+</div>
+</div>
+
+<div class="section">
+<h2>Leave Balances</h2>
+<div class="grid">
+<input type="number" placeholder="Vacation Leave">
+<input type="number" placeholder="Sick Leave">
+<input type="number" placeholder="Emergency Leave">
+<input type="number" placeholder="Birthday Leave">
+<input type="number" placeholder="Maternity Leave">
+<input type="number" placeholder="Paternity Leave">
+<input type="number" placeholder="Study Leave">
+</div>
+</div>
+
+<div class="section">
+<h2>Dependents</h2>
 <button class="btn add" onclick="addDependent()">+ Add Dependent</button>
 <div id="dependents"></div>
 </div>
 
-<div class="section"><h3>Education</h3>
+<div class="section">
+<h2>Educational Background</h2>
 <button class="btn add" onclick="addEducation()">+ Add Education</button>
 <div id="education"></div>
 </div>
 
-<div class="section"><h3>Employment History</h3>
+<div class="section">
+<h2>Employment History</h2>
 <button class="btn add" onclick="addEmployment()">+ Add Employment</button>
 <div id="employment"></div>
 </div>
 
-<button class="btn save">Save Employee Profile</button>
+<button class="save btn">SAVE EMPLOYEE PROFILE</button>
+
 </div>
 
 <script>
 function addDependent(){
- const d=document.createElement('div');
- d.className='dynamic-row';
- d.innerHTML=`<input placeholder="Dependent Name"><input placeholder="Relationship"><input type="date"><input placeholder="Occupation"><button class="btn remove" onclick="this.parentElement.remove()">X</button>`;
- document.getElementById('dependents').appendChild(d);
+let d=document.createElement('div');
+d.className='dynamic-row';
+d.innerHTML=`<input placeholder="Dependent Name"><input placeholder="Relationship"><input type="date"><input placeholder="Occupation"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
+document.getElementById('dependents').appendChild(d);
 }
 function addEducation(){
- const d=document.createElement('div');
- d.className='dynamic-row';
- d.innerHTML=`<input placeholder="Level"><input placeholder="School"><input placeholder="Year"><input placeholder="Certificate"><button class="btn remove" onclick="this.parentElement.remove()">X</button>`;
- document.getElementById('education').appendChild(d);
+let d=document.createElement('div');
+d.className='dynamic-row';
+d.innerHTML=`<input placeholder="Education Level"><input placeholder="Institution"><input placeholder="Year Completed"><input placeholder="Certificate"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
+document.getElementById('education').appendChild(d);
 }
 function addEmployment(){
- const d=document.createElement('div');
- d.className='dynamic-row';
- d.innerHTML=`<input placeholder="Company"><input placeholder="Job Title"><input placeholder="From"><input placeholder="To"><button class="btn remove" onclick="this.parentElement.remove()">X</button>`;
- document.getElementById('employment').appendChild(d);
+let d=document.createElement('div');
+d.className='dynamic-row';
+d.innerHTML=`<input placeholder="Company"><input placeholder="Job Title"><input type="date"><input type="date"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
+document.getElementById('employment').appendChild(d);
 }
+addDependent();
+addEducation();
+addEmployment();
 </script>
 </body>
 </html>
