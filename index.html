@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -205,7 +206,21 @@ grid-template-columns:1fr;
 </div>
 
 </header>
+<script>
 
+const supabaseUrl =
+'https://tuihpvykuqbqnfyfepql.supabase.co';
+
+const supabaseKey =
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1aWhwdnlrdXFicW5meWZlcHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3Mjg4OTcsImV4cCI6MjA5NzMwNDg5N30.HZKS8CgFLjkZ-Bx2AIjFjurH3IsKjvf37Ft852CzJsQ';
+
+const supabaseClient =
+supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+</script>
 <div class="container">
 <!-- EMPLOYEE PICTURE -->
 
