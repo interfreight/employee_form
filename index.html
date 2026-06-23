@@ -609,24 +609,6 @@ SAVE CHANGES
 <script>
 
 
-let table=document.querySelector("#educationTable tbody");
-
-let row=table.insertRow();
-
-row.innerHTML=`
-<td><input></td>
-<td><input></td>
-<td><input></td>
-<td><input></td>
-<td>
-<button class="deleteBtn"
-onclick="this.parentElement.parentElement.remove()">
-Delete
-</button>
-</td>
-`;
-
-
 
 
 function addDependentRow(){
@@ -656,9 +638,7 @@ function addHistoryRow(){
 
 let table=document.querySelector("#historyTable tbody");
 
-
-}
-
+let row=table.insertRow();
 
 row.innerHTML=`
 <td><input></td>
@@ -674,6 +654,7 @@ Delete
 </td>
 `;
 
+}
 
 
 
@@ -697,16 +678,14 @@ reader.readAsDataURL(e.target.files[0]);
 
 function addEducationRow(){
 
-
-
-let table=document.querySelector("#dependentTable tbody");
+let table=document.querySelector("#educationTable tbody");
 
 let row=table.insertRow();
 
 row.innerHTML=`
 <td><input></td>
 <td><input></td>
-<td><input type="date"></td>
+<td><input></td>
 <td><input></td>
 <td>
 <button class="deleteBtn"
@@ -716,41 +695,8 @@ Delete
 </td>
 `;
 
-
-
-row.innerHTML=`
-<td><input></td>
-<td><input></td>
-<td><input type="date"></td>
-<td><input type="date"></td>
-<td><input></td>
-<td>
-<button class="deleteBtn"
-onclick="this.parentElement.parentElement.remove()">
-Delete
-</button>
-</td>
-`;
-
-
-
-
-document.getElementById("profilePhoto")
-.addEventListener("change",function(e){
-
-const reader=new FileReader();
-
-reader.onload=function(){
-
-document.getElementById("photoPreview").src=reader.result;
-
 }
 
-reader.readAsDataURL(e.target.files[0]);
-
-});
-}
-</script>
 <script>
 
 async function uploadPhoto(){
@@ -794,10 +740,9 @@ try{
 // MAIN PROFILE
 
 const employeeData={
-
+profile_photo: await uploadPhoto(),
 employee_number:document.getElementById("employee_number").value,
-first_name:document.getElementById("first_name").value,
-middle_name:document.getElementById("middle_name").value,
+full_name:document.getElementById("full_name").value,
 father_name:document.getElementById("father_name").value,
 mother_name:document.getElementById("mother_name").value,
 date_of_birth:document.getElementById("date_of_birth").value,
@@ -986,55 +931,47 @@ Search
 <script>
 
 async function searchEmployee(){
-if(data.profile_photo){
 
-document.getElementById("photoPreview")
-.src=data.profile_photo;
-
-}
 let empNo=document
 .getElementById("searchEmployee")
 .value;
 
-
 const {data,error}=await supabaseClient
-
 .from("employee_profiles")
-
 .select("*")
-
 .eq("employee_number",empNo)
-
 .single();
-
 
 if(error){
 
 alert("Employee not found");
-
 return;
 
 }
 
+if(data.profile_photo){
 
-document.getElementById("employee_number").value=data.employee_number;
-document.getElementById("first_name").value=data.first_name;
-document.getElementById("middle_name").value=data.middle_name;
-document.getElementById("father_name").value=data.father_name;
-document.getElementById("mother_name").value=data.mother_name;
-document.getElementById("date_of_birth").value=data.date_of_birth;
-document.getElementById("place_of_birth").value=data.place_of_birth;
-document.getElementById("gender").value=data.gender;
-document.getElementById("marital_status").value=data.marital_status;
-document.getElementById("nationality").value=data.nationality;
-document.getElementById("citizenship").value=data.citizenship;
-document.getElementById("religion").value=data.religion;
+document.getElementById("photoPreview").src=data.profile_photo;
+
+}
+
+document.getElementById("employee_number").value=data.employee_number || "";
+document.getElementById("first_name").value=data.first_name || "";
+document.getElementById("middle_name").value=data.middle_name || "";
+document.getElementById("father_name").value=data.father_name || "";
+document.getElementById("mother_name").value=data.mother_name || "";
+document.getElementById("date_of_birth").value=data.date_of_birth || "";
+document.getElementById("place_of_birth").value=data.place_of_birth || "";
+document.getElementById("gender").value=data.gender || "";
+document.getElementById("marital_status").value=data.marital_status || "";
+document.getElementById("nationality").value=data.nationality || "";
+document.getElementById("citizenship").value=data.citizenship || "";
+document.getElementById("religion").value=data.religion || "";
 
 alert("Employee loaded.");
 
 }
 
-</script>
 </script>
 
 </div>
