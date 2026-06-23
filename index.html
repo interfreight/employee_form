@@ -3,364 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Onboarding System</title>
+<title>Employee Profile Setup</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
 body{
-.section{
-background:#fff;
-padding:25px;
-border-radius:14px;
-box-shadow:0 2px 12px rgba(0,0,0,.06);
+background:#f4f7fb;
+padding:30px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+h1{
+color:#003366;
 margin-bottom:20px;
 }
 
-.section-title{
-font-size:18px;
-font-weight:700;
+label{
+font-size:12px;
 color:#003366;
-margin-bottom:20px;
-padding-bottom:10px;
-border-bottom:2px solid #edf2f7;
+font-weight:600;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
 }
 
-.field{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.field label{
-font-size:13px;
-font-weight:600;
-color:#444;
-}
-
-input,
-select,
-textarea{
-padding:12px;
-border:1px solid #d9dee7;
-border-radius:10px;
-font-size:14px;
+input, select{
 width:100%;
-box-sizing:border-box;
-}
-
-textarea{
-resize:vertical;
-min-height:90px;
-}
-
-.photo-box{
-width:180px;
-height:180px;
-border:2px dashed #003366;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:auto;
-overflow:hidden;
+padding:11px;
+border:1px solid #ddd;
+border-radius:8px;
 background:#fafafa;
 }
 
-.photo-box img{
-width:100%;
-height:100%;
-object-fit:cover;
+input:focus, select:focus{
+outline:none;
+border-color:#003366;
+background:white;
 }
 
-.submit-area{
-position:sticky;
-bottom:0;
-background:white;
-padding:15px;
-box-shadow:0 -3px 10px rgba(0,0,0,.08);
-margin-top:20px;
+.section-title{
+margin:20px 0 10px;
+font-size:14px;
+font-weight:700;
+color:#003366;
+border-left:4px solid #F4C542;
+padding-left:10px;
 }
 
 .btn{
-background:#003366;
-color:white;
-border:none;
-padding:15px;
 width:100%;
-font-size:15px;
-font-weight:700;
-border-radius:10px;
+margin-top:20px;
+padding:14px;
+border:none;
+background:#F4C542;
+color:#003366;
+font-weight:bold;
+border-radius:8px;
 cursor:pointer;
 }
+
 </style>
 </head>
 
 <body>
-  
+
 <div class="container">
 
-<!-- PHOTO -->
-<div class="section">
-<div class="section-title">Employee Photo</div>
+<h1>Employee Profile Setup</h1>
 
-<div class="photo-box">
-<img id="photoPreview">
-</div>
-
-<br>
-
-<input type="file" id="employee_photo">
-</div>
-
-<!-- EMPLOYEE -->
-<div class="section">
-<div class="section-title">Employee Information</div>
-
+<!-- PERSONAL -->
+<div class="section-title">Personal Information</div>
 <div class="grid">
+<input id="employee_number" placeholder="Employee Number">
+<input id="fullName" placeholder="Full Name" readonly>
 
-<div class="field">
-<label>Full Name</label>
-<input id="fullName" readonly>
+<input id="gender" placeholder="Gender">
+<input type="date" id="date_of_birth">
+
+<input id="place_of_birth" placeholder="Place of Birth">
+<input id="nationality" placeholder="Nationality">
+
+<input id="citizenship" placeholder="Citizenship">
+<input id="religion" placeholder="Religion">
+
+<input id="marital_status" placeholder="Marital Status">
+<input id="spouse_name" placeholder="Spouse Name">
+
+<input id="father_name" placeholder="Father Name">
+<input id="mother_name" placeholder="Mother Name">
 </div>
 
-<div class="field">
-<label>Department</label>
-<input id="department" readonly>
+<!-- CONTACT -->
+<div class="section-title">Contact Information</div>
+<div class="grid">
+<input id="mobile_number" placeholder="Mobile Number">
+<input id="personal_email" placeholder="Personal Email">
+
+<input id="home_address" placeholder="Home Address">
+<input id="local_address" placeholder="Local Address">
 </div>
 
-<div class="field">
-<label>Position</label>
-<input id="position">
-</div>
+<!-- EMPLOYMENT -->
+<div class="section-title">Employment Details</div>
+<div class="grid">
+<input id="department" placeholder="Department">
+<input id="position" placeholder="Position">
 
-<div class="field">
-<label>Employee Number</label>
-<input id="employee_number">
-</div>
-
-<div class="field">
-<label>Employment Status</label>
 <select id="employment_status">
 <option>Regular</option>
 <option>Probationary</option>
 <option>Contractual</option>
 </select>
-</div>
 
-<div class="field">
-<label>Date Hired</label>
 <input type="date" id="date_hired">
 </div>
 
-</div>
-</div>
-
-<!-- PERSONAL -->
-<div class="section">
-<div class="section-title">Personal Information</div>
-
+<!-- GOVERNMENT -->
+<div class="section-title">Government IDs</div>
 <div class="grid">
+<input id="sss" placeholder="SSS">
+<input id="philhealth" placeholder="PhilHealth">
 
-<div class="field">
-<label>Sex/Gender</label>
-<select id="gender">
-<option>Male</option>
-<option>Female</option>
-</select>
+<input id="pagibig" placeholder="Pag-IBIG">
+<input id="tin" placeholder="TIN">
 </div>
 
-<div class="field">
-<label>Date of Birth</label>
-<input type="date" id="date_of_birth">
-</div>
-
-<div class="field">
-<label>Place of Birth</label>
-<input id="place_of_birth">
-</div>
-
-<div class="field">
-<label>Nationality</label>
-<input id="nationality">
-</div>
-
-<div class="field">
-<label>Citizenship</label>
-<input id="citizenship">
-</div>
-
-<div class="field">
-<label>Marital Status</label>
-<select id="marital_status">
-<option>Single</option>
-<option>Married</option>
-<option>Widowed</option>
-<option>Separated</option>
-</select>
-</div>
-
-<div class="field">
-<label>Religion</label>
-<input id="religion">
-</div>
-
-<div class="field">
-<label>Mobile Number</label>
-<input id="mobile_number">
-</div>
-
-<div class="field">
-<label>Personal Email</label>
-<input id="personal_email">
-</div>
-
-</div>
-</div>
-
-<!-- FAMILY -->
-<div class="section">
-<div class="section-title">Family Information</div>
-
+<!-- LEAVES -->
+<div class="section-title">Leave Credits</div>
 <div class="grid">
+<input type="number" id="vacation_leave" value="15" placeholder="Vacation Leave">
+<input type="number" id="sick_leave" value="15" placeholder="Sick Leave">
 
-<div class="field">
-<label>Father's Name</label>
-<input id="father_name">
+<input type="number" id="emergency_leave" value="3" placeholder="Emergency Leave">
+<input type="number" id="birthday_leave" value="1" placeholder="Birthday Leave">
+
+<input type="number" id="maternity_leave" value="0" placeholder="Maternity Leave">
+<input type="number" id="paternity_leave" value="0" placeholder="Paternity Leave">
+
+<input type="number" id="study_leave" value="0" placeholder="Study Leave">
 </div>
 
-<div class="field">
-<label>Mother's Name</label>
-<input id="mother_name">
-</div>
-
-<div class="field">
-<label>Spouse Name</label>
-<input id="spouse_name">
-</div>
-
-<div class="field">
-<label>Home Address</label>
-<textarea id="home_address"></textarea>
-</div>
-
-<div class="field">
-<label>Local Address</label>
-<textarea id="local_address"></textarea>
-</div>
-
-</div>
-</div>
-
-<!-- GOVERNMENT IDS -->
-<div class="section">
-<div class="section-title">Government Information</div>
-
-<div class="grid">
-
-<input id="sss" placeholder="SSS Number">
-<input id="philhealth" placeholder="PhilHealth Number">
-<input id="pagibig" placeholder="Pag-IBIG Number">
-<input id="tin" placeholder="TIN Number">
-
-</div>
-</div>
-
-<!-- DEPENDENTS -->
-<div class="section">
-<div class="section-title">Dependents (Maximum 5)</div>
-
-<div id="dependents">
-
-<div class="grid row">
-<input placeholder="Dependent Name">
-<input placeholder="Relationship">
-<input type="date">
-<input placeholder="Occupation">
-</div>
-
-<div class="grid row">
-<input placeholder="Dependent Name">
-<input placeholder="Relationship">
-<input type="date">
-<input placeholder="Occupation">
-</div>
-
-<div class="grid row">
-<input placeholder="Dependent Name">
-<input placeholder="Relationship">
-<input type="date">
-<input placeholder="Occupation">
-</div>
-
-<div class="grid row">
-<input placeholder="Dependent Name">
-<input placeholder="Relationship">
-<input type="date">
-<input placeholder="Occupation">
-</div>
-
-<div class="grid row">
-<input placeholder="Dependent Name">
-<input placeholder="Relationship">
-<input type="date">
-<input placeholder="Occupation">
-</div>
-
-</div>
-</div>
-
-<!-- EDUCATION -->
-<div class="section">
-<div class="section-title">Academic Qualifications</div>
-
-<div id="education">
-
-<div class="grid row">
-
-<select>
-<option>High School Graduate</option>
-<option>Vocational</option>
-<option>College Undergraduate</option>
-<option>College Graduate</option>
-<option>Master's Degree</option>
-<option>Doctorate Degree</option>
-</select>
-
-<input placeholder="Institute">
-<input placeholder="Year Completed">
-<input placeholder="Certificate Obtained">
+<button class="btn" onclick="saveProfile()">Complete Employee Setup</button>
 
 </div>
 
-</div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- EMPLOYMENT HISTORY -->
-<div class="section">
-<div class="section-title">Previous Employment</div>
+<script>
 
-<div id="employment"></div>
+const db = supabase.createClient(
+"https://tuihpvykuqbqnfyfepql.supabase.co",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1aWhwdnlrdXFicW5meWZlcHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3Mjg4OTcsImV4cCI6MjA5NzMwNDg5N30.HZKS8CgFLjkZ-Bx2AIjFjurH3IsKjvf37Ft852CzJsQ"
+);
 
-<div class="add-btn" onclick="addEmployment()">
-+ Add Employment History
-</div>
+const userId = new URLSearchParams(window.location.search).get("id");
 
-</div>
+loadEmployee();
 
-<div class="submit-area">
-<button class="btn" onclick="saveAll()">
-COMPLETE EMPLOYEE ONBOARDING
-</button>
-</div>
+async function loadEmployee(){
 
-</div>
-location.href="https://interfreight.github.io/Hr_Dashboard/";
+const { data } = await db
+.from("users")
+.select("*")
+.eq("id", userId)
+.single();
+
+document.getElementById("fullName").value = data.full_name || "";
+document.getElementById("department").value = data.department || "";
 }
+
+async function saveProfile(){
+
+const payload = {
+
+user_id: Number(userId),
+
+employee_number: document.getElementById("employee_number").value,
+gender: document.getElementById("gender").value,
+date_of_birth: document.getElementById("date_of_birth").value,
+place_of_birth: document.getElementById("place_of_birth").value,
+nationality: document.getElementById("nationality").value,
+citizenship: document.getElementById("citizenship").value,
+religion: document.getElementById("religion").value,
+marital_status: document.getElementById("marital_status").value,
+spouse_name: document.getElementById("spouse_name").value,
+father_name: document.getElementById("father_name").value,
+mother_name: document.getElementById("mother_name").value,
+
+mobile_number: document.getElementById("mobile_number").value,
+personal_email: document.getElementById("personal_email").value,
+home_address: document.getElementById("home_address").value,
+local_address: document.getElementById("local_address").value,
+
+department: document.getElementById("department").value,
+position: document.getElementById("position").value,
+employment_status: document.getElementById("employment_status").value,
+date_hired: document.getElementById("date_hired").value,
+
+sss: document.getElementById("sss").value,
+philhealth: document.getElementById("philhealth").value,
+pagibig: document.getElementById("pagibig").value,
+tin: document.getElementById("tin").value,
+
+vacation_leave: Number(document.getElementById("vacation_leave").value),
+sick_leave: Number(document.getElementById("sick_leave").value),
+emergency_leave: Number(document.getElementById("emergency_leave").value),
+birthday_leave: Number(document.getElementById("birthday_leave").value),
+maternity_leave: Number(document.getElementById("maternity_leave").value),
+paternity_leave: Number(document.getElementById("paternity_leave").value),
+study_leave: Number(document.getElementById("study_leave").value),
+
+profile_completed: true
+};
+
+const { error } = await db
+.from("employee_profiles")
+.upsert(payload);
+
+if(error){
+alert(error.message);
+return;
+}
+
+alert("Employee Profile Completed");
+
+window.location.href =
+"https://interfreight.github.io/Hr_Dashboard/";
+}
+
 </script>
 
 </body>
