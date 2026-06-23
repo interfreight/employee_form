@@ -3,280 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Onboarding</title>
+<title>Employee Full Onboarding</title>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
 body{
+font-family:Segoe UI;
 background:#f4f7fb;
-padding:30px;
+padding:20px;
 }
 
 .container{
 max-width:1000px;
 margin:auto;
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 3px 10px rgba(0,0,0,.08);
+background:#fff;
+padding:25px;
+border-radius:12px;
 }
 
-h1{
+h2{
 color:#003366;
-margin-bottom:25px;
-}
-
-.section{
-margin-bottom:30px;
-}
-
-.section h2{
-margin-bottom:15px;
-color:#003366;
+margin-top:20px;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:15px;
+gap:10px;
 }
 
-input,
-select{
-width:100%;
-padding:12px;
+input,select{
+padding:10px;
 border:1px solid #ddd;
 border-radius:8px;
+width:100%;
+margin-top:5px;
 }
 
-.btn{
+.section{
+margin-bottom:25px;
+}
+
+button{
+padding:12px;
 background:#F4C542;
-color:#003366;
 border:none;
-padding:14px 25px;
-border-radius:8px;
-cursor:pointer;
+width:100%;
 font-weight:bold;
+cursor:pointer;
+border-radius:8px;
+margin-top:20px;
 }
-
-.btn:hover{
-opacity:.9;
-}
-
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-<h1>Complete Employee Profile</h1>
+<h1>Employee Full Onboarding</h1>
 
-<div class="section">
-<h2>Personal Information</h2>
-
+<!-- USERS -->
+<h2>User Info</h2>
 <div class="grid">
-<input type="text" id="fullName" placeholder="Full Name" readonly>
-<input type="text" id="address" placeholder="Address">
-</div>
+<input id="fullName" readonly>
+<input id="department" readonly>
 </div>
 
-<div class="section">
-<h2>Emergency Contact</h2>
-
+<!-- PROFILE -->
+<h2>Employee Profile</h2>
 <div class="grid">
-<input type="text" id="emergencyName" placeholder="Contact Name">
-<input type="text" id="emergencyNumber" placeholder="Contact Number">
-</div>
-</div>
+<input id="address" placeholder="Address">
+<input id="mobile_number" placeholder="Mobile Number">
+<input id="personal_email" placeholder="Personal Email">
+<input id="gender" placeholder="Gender">
+<input id="date_of_birth" type="date">
+<input id="place_of_birth" placeholder="Place of Birth">
+<input id="nationality" placeholder="Nationality">
+<input id="citizenship" placeholder="Citizenship">
+<input id="religion" placeholder="Religion">
+<input id="marital_status" placeholder="Marital Status">
+<input id="spouse_name" placeholder="Spouse Name">
 
-<div class="section">
-<h2>Employment Information</h2>
+<input id="father_name" placeholder="Father Name">
+<input id="mother_name" placeholder="Mother Name">
 
-<div class="grid">
-<input type="text" id="department" placeholder="Department">
+<input id="sss" placeholder="SSS">
+<input id="philhealth" placeholder="PhilHealth">
+<input id="pagibig" placeholder="Pag-IBIG">
+<input id="tin" placeholder="TIN">
 
-<input type="text" id="position" placeholder="Position">
+<input id="position" placeholder="Position">
+<input id="employee_number" placeholder="Employee Number">
 
-<select id="employmentStatus">
+<select id="employment_status">
 <option>Regular</option>
 <option>Probationary</option>
 <option>Contractual</option>
 </select>
 
-<input type="date" id="dateHired">
-</div>
+<input id="date_hired" type="date">
 </div>
 
-<div class="section">
-<h2>Government IDs</h2>
-
+<!-- LEAVES -->
+<h2>Leave Credits</h2>
 <div class="grid">
-<input type="text" id="sss" placeholder="SSS">
-<input type="text" id="philhealth" placeholder="PhilHealth">
-<input type="text" id="pagibig" placeholder="Pag-IBIG">
-<input type="text" id="tin" placeholder="TIN">
-</div>
-</div>
-
-<div class="section">
-<h2>Leave Credits Assignment</h2>
-
-<div class="grid">
-
-<div>
-<label><strong>Vacation Leave (VL)</strong></label>
-<p style="font-size:12px;color:#666;margin-bottom:5px;">
-For planned vacations, personal errands, and rest days.
-</p>
-<input type="number" id="vl" value="15">
+<input id="vl" type="number" value="15">
+<input id="sl" type="number" value="15">
+<input id="el" type="number" value="3">
+<input id="bl" type="number" value="1">
+<input id="maternity_leave" type="number" value="0">
+<input id="paternity_leave" type="number" value="0">
+<input id="study_leave" type="number" value="0">
 </div>
 
-<div>
-<label><strong>Sick Leave (SL)</strong></label>
-<p style="font-size:12px;color:#666;margin-bottom:5px;">
-Used when employee is sick or medically unable to work.
-</p>
-<input type="number" id="sl" value="15">
-</div>
+<!-- DEPENDENTS -->
+<h2>Dependents</h2>
+<div id="dependents"></div>
+<button onclick="addDependent()">+ Add Dependent</button>
 
-<div>
-<label><strong>Emergency Leave (EL)</strong></label>
-<p style="font-size:12px;color:#666;margin-bottom:5px;">
-For urgent family matters, accidents, or emergencies.
-</p>
-<input type="number" id="el" value="3">
-</div>
+<!-- EDUCATION -->
+<h2>Education</h2>
+<div id="education"></div>
+<button onclick="addEducation()">+ Add Education</button>
 
-<div>
-<label><strong>Birthday Leave (BL)</strong></label>
-<p style="font-size:12px;color:#666;margin-bottom:5px;">
-Paid leave that may be used on employee's birthday.
-</p>
-<input type="number" id="bl" value="1">
-</div>
+<!-- EMPLOYMENT HISTORY -->
+<h2>Employment History</h2>
+<div id="employment"></div>
+<button onclick="addEmployment()">+ Add Employment</button>
 
-</div>
-</div>
-<button class="btn" onclick="saveProfile()">
-Complete Employee Setup
-</button>
+<button onclick="saveAll()">SUBMIT ALL</button>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-const SUPABASE_URL =
-"https://tuihpvykuqbqnfyfepql.supabase.co";
-
-const SUPABASE_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1aWhwdnlrdXFicW5meWZlcHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3Mjg4OTcsImV4cCI6MjA5NzMwNDg5N30.HZKS8CgFLjkZ-Bx2AIjFjurH3IsKjvf37Ft852CzJsQ";
-
-const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+const supabase = window.supabase.createClient(
+"https://tuihpvykuqbqnfyfepql.supabase.co",
+"YOUR_KEY"
 );
 
-const params = new URLSearchParams(window.location.search);
-const userId = params.get("id");
+const userId = new URLSearchParams(location.search).get("id");
 
-loadEmployee();
+/* ---------------- LOAD USER ---------------- */
+async function loadUser(){
+const { data } = await supabase
+.from("users")
+.select("*")
+.eq("id", userId)
+.single();
 
-async function loadEmployee(){
+fullName.value = data.full_name;
+department.value = data.department;
+}
+loadUser();
 
-    const { data, error } = await db
-    .from("users")
-    .select("*")
-    .eq("id", userId)
-    .single();
+/* ---------------- DYNAMIC ROWS ---------------- */
 
-   if(error){
-    console.error(error);
-    alert(JSON.stringify(error));
-    return;
+function addDependent(){
+document.getElementById("dependents").innerHTML += `
+<div class="grid">
+<input placeholder="Dependent Name">
+<input placeholder="Relationship">
+<input type="date">
+<input placeholder="Occupation">
+</div>`;
 }
 
-    document.getElementById("fullName").value =
-        data.full_name || "";
-
-    document.getElementById("department").value =
-        data.department || "";
+function addEducation(){
+document.getElementById("education").innerHTML += `
+<div class="grid">
+<input placeholder="Level">
+<input placeholder="Institute">
+<input type="number" placeholder="Year Completed">
+<input placeholder="Certificate">
+</div>`;
 }
 
-async function saveProfile(){
-
-    const payload = {
-
-        user_id: Number(userId),
-
-        address:
-        document.getElementById("address").value,
-
-        emergency_contact_name:
-        document.getElementById("emergencyName").value,
-
-        emergency_contact_number:
-        document.getElementById("emergencyNumber").value,
-
-        position:
-        document.getElementById("position").value,
-
-        employment_status:
-        document.getElementById("employmentStatus").value,
-
-        date_hired:
-        document.getElementById("dateHired").value,
-
-        sss:
-        document.getElementById("sss").value,
-
-        philhealth:
-        document.getElementById("philhealth").value,
-
-        pagibig:
-        document.getElementById("pagibig").value,
-
-        tin:
-        document.getElementById("tin").value,
-
-        vacation_leave:
-        Number(document.getElementById("vl").value),
-
-        sick_leave:
-        Number(document.getElementById("sl").value),
-
-        emergency_leave:
-        Number(document.getElementById("el").value),
-
-        birthday_leave:
-        Number(document.getElementById("bl").value),
-
-        profile_completed: true
-    };
-
-    const { error } = await db
-    .from("employee_profiles")
-    .upsert(payload);
-
-    if(error){
-        alert(error.message);
-        return;
-    }
-
-    alert("Employee Profile Completed");
-
-    window.location.href =
-        "https://interfreight.github.io/Hr_Dashboard/";
+function addEmployment(){
+document.getElementById("employment").innerHTML += `
+<div class="grid">
+<input placeholder="Company">
+<input placeholder="Job Title">
+<input type="date">
+<input type="date">
+<input placeholder="Reason for Leaving">
+</div>`;
 }
 
+/* ---------------- SAVE ALL ---------------- */
+
+async function saveAll(){
+
+/* 1. PROFILE */
+const profile = {
+user_id: Number(userId),
+address: address.value,
+mobile_number: mobile_number.value,
+personal_email: personal_email.value,
+gender: gender.value,
+date_of_birth: date_of_birth.value,
+place_of_birth: place_of_birth.value,
+nationality: nationality.value,
+citizenship: citizenship.value,
+religion: religion.value,
+marital_status: marital_status.value,
+spouse_name: spouse_name.value,
+father_name: father_name.value,
+mother_name: mother_name.value,
+
+sss: sss.value,
+philhealth: philhealth.value,
+pagibig: pagibig.value,
+tin: tin.value,
+
+position: position.value,
+employee_number: employee_number.value,
+employment_status: employment_status.value,
+date_hired: date_hired.value,
+
+vacation_leave: Number(vl.value),
+sick_leave: Number(sl.value),
+emergency_leave: Number(el.value),
+birthday_leave: Number(bl.value),
+maternity_leave: Number(maternity_leave.value),
+paternity_leave: Number(paternity_leave.value),
+study_leave: Number(study_leave.value),
+
+profile_completed: true
+};
+
+await supabase.from("employee_profiles").upsert(profile);
+
+/* 2. DEPENDENTS */
+document.querySelectorAll("#dependents .grid").forEach(async row=>{
+let inputs = row.querySelectorAll("input");
+
+await supabase.from("employee_dependents").insert({
+employee_id: userId,
+dependent_name: inputs[0].value,
+relationship: inputs[1].value,
+date_of_birth: inputs[2].value,
+occupation: inputs[3].value
+});
+});
+
+/* 3. EDUCATION */
+document.querySelectorAll("#education .grid").forEach(async row=>{
+let inputs = row.querySelectorAll("input");
+
+await supabase.from("employee_education").insert({
+employee_id: userId,
+education_level: inputs[0].value,
+institute: inputs[1].value,
+year_completed: inputs[2].value,
+certificate_obtained: inputs[3].value
+});
+});
+
+/* 4. EMPLOYMENT */
+document.querySelectorAll("#employment .grid").forEach(async row=>{
+let inputs = row.querySelectorAll("input");
+
+await supabase.from("employee_employment_history").insert({
+employee_id: userId,
+company_name: inputs[0].value,
+job_title: inputs[1].value,
+date_from: inputs[2].value,
+date_to: inputs[3].value,
+leaving_reason: inputs[4].value
+});
+});
+
+alert("All employee data saved!");
+location.href = "https://interfreight.github.io/Hr_Dashboard/";
+}
 </script>
 
 </body>
