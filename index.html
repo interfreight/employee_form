@@ -3,89 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Full Onboarding</title>
+<title>Employee Onboarding System</title>
 
 <style>
 body{
+margin:0;
 font-family:Segoe UI;
-background:#f4f7fb;
-padding:20px;
+background:#f5f7fb;
+}
+
+.header{
+background:#003366;
+color:white;
+padding:18px 25px;
+font-size:18px;
+font-weight:600;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
-background:#fff;
-padding:25px;
-border-radius:12px;
+padding:20px;
 }
 
-h2{
-color:#003366;
-margin-top:20px;
+.tabs{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.tab{
+padding:10px 15px;
+background:white;
+border-radius:8px;
+cursor:pointer;
+border:1px solid #ddd;
+font-weight:600;
+}
+
+.tab.active{
+background:#003366;
+color:white;
+border:none;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.06);
+display:none;
+}
+
+.card.active{
+display:block;
 }
 
 .grid{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
 input,select{
 padding:10px;
-border:1px solid #ddd;
 border-radius:8px;
+border:1px solid #ddd;
 width:100%;
-margin-top:5px;
+outline:none;
 }
 
-.section{
-margin-bottom:25px;
+label{
+font-size:13px;
+font-weight:600;
+color:#333;
 }
 
-button{
-padding:12px;
+.section-title{
+font-size:16px;
+font-weight:700;
+margin-bottom:15px;
+color:#003366;
+}
+
+.btn{
 background:#F4C542;
 border:none;
+padding:12px;
 width:100%;
-font-weight:bold;
-cursor:pointer;
-border-radius:8px;
 margin-top:20px;
+font-weight:700;
+border-radius:8px;
+cursor:pointer;
+}
+
+.btn:hover{opacity:.9}
+
+.add-btn{
+background:#e9eef7;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+border:1px dashed #003366;
+margin-top:10px;
+}
+
+.row{
+margin-bottom:15px;
+}
+
+@media(max-width:768px){
+.grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 
 <body>
 
+<div class="header">
+Employee Onboarding System
+</div>
+
 <div class="container">
 
-<h1>Employee Full Onboarding</h1>
-
-<!-- USERS -->
-<h2>User Info</h2>
-<div class="grid">
-<input id="fullName" readonly>
-<input id="department" readonly>
+<div class="tabs">
+<div class="tab active" onclick="showTab(0)">Profile</div>
+<div class="tab" onclick="showTab(1)">Family</div>
+<div class="tab" onclick="showTab(2)">Education</div>
+<div class="tab" onclick="showTab(3)">Employment</div>
 </div>
 
 <!-- PROFILE -->
-<h2>Employee Profile</h2>
+<div class="card active">
+<div class="section-title">Employee Profile</div>
+
 <div class="grid">
+<input id="fullName" readonly>
+<input id="department" readonly>
+
 <input id="address" placeholder="Address">
 <input id="mobile_number" placeholder="Mobile Number">
-<input id="personal_email" placeholder="Personal Email">
+<input id="personal_email" placeholder="Email">
+
 <input id="gender" placeholder="Gender">
 <input id="date_of_birth" type="date">
 <input id="place_of_birth" placeholder="Place of Birth">
+
 <input id="nationality" placeholder="Nationality">
 <input id="citizenship" placeholder="Citizenship">
 <input id="religion" placeholder="Religion">
+
 <input id="marital_status" placeholder="Marital Status">
 <input id="spouse_name" placeholder="Spouse Name">
-
-<input id="father_name" placeholder="Father Name">
-<input id="mother_name" placeholder="Mother Name">
 
 <input id="sss" placeholder="SSS">
 <input id="philhealth" placeholder="PhilHealth">
@@ -103,35 +176,30 @@ margin-top:20px;
 
 <input id="date_hired" type="date">
 </div>
-
-<!-- LEAVES -->
-<h2>Leave Credits</h2>
-<div class="grid">
-<input id="vl" type="number" value="15">
-<input id="sl" type="number" value="15">
-<input id="el" type="number" value="3">
-<input id="bl" type="number" value="1">
-<input id="maternity_leave" type="number" value="0">
-<input id="paternity_leave" type="number" value="0">
-<input id="study_leave" type="number" value="0">
 </div>
 
-<!-- DEPENDENTS -->
-<h2>Dependents</h2>
+<!-- FAMILY -->
+<div class="card">
+<div class="section-title">Dependents</div>
 <div id="dependents"></div>
-<button onclick="addDependent()">+ Add Dependent</button>
+<div class="add-btn" onclick="addDependent()">+ Add Dependent</div>
+</div>
 
 <!-- EDUCATION -->
-<h2>Education</h2>
+<div class="card">
+<div class="section-title">Education</div>
 <div id="education"></div>
-<button onclick="addEducation()">+ Add Education</button>
+<div class="add-btn" onclick="addEducation()">+ Add Education</div>
+</div>
 
-<!-- EMPLOYMENT HISTORY -->
-<h2>Employment History</h2>
+<!-- EMPLOYMENT -->
+<div class="card">
+<div class="section-title">Employment History</div>
 <div id="employment"></div>
-<button onclick="addEmployment()">+ Add Employment</button>
+<div class="add-btn" onclick="addEmployment()">+ Add Employment</div>
 
-<button onclick="saveAll()">SUBMIT ALL</button>
+<button class="btn" onclick="saveAll()">SUBMIT ALL</button>
+</div>
 
 </div>
 
@@ -140,30 +208,33 @@ margin-top:20px;
 <script>
 const supabase = window.supabase.createClient(
 "https://tuihpvykuqbqnfyfepql.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1aWhwdnlrdXFicW5meWZlcHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3Mjg4OTcsImV4cCI6MjA5NzMwNDg5N30.HZKS8CgFLjkZ-Bx2AIjFjurH3IsKjvf37Ft852CzJsQ"
+"YOUR_KEY"
 );
 
 const userId = new URLSearchParams(location.search).get("id");
 
-/* ---------------- LOAD USER ---------------- */
-async function loadUser(){
-const { data } = await supabase
-.from("users")
-.select("*")
-.eq("id", userId)
-.single();
+/* ---------------- TABS ---------------- */
+function showTab(i){
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
 
+document.querySelectorAll(".card")[i].classList.add("active");
+document.querySelectorAll(".tab")[i].classList.add("active");
+}
+
+/* ---------------- LOAD ---------------- */
+async function load(){
+const { data } = await supabase.from("users").select("*").eq("id", userId).single();
 fullName.value = data.full_name;
 department.value = data.department;
 }
-loadUser();
+load();
 
-/* ---------------- DYNAMIC ROWS ---------------- */
-
+/* ---------------- DYNAMIC UI ---------------- */
 function addDependent(){
-document.getElementById("dependents").innerHTML += `
-<div class="grid">
-<input placeholder="Dependent Name">
+dependents.innerHTML += `
+<div class="grid row">
+<input placeholder="Name">
 <input placeholder="Relationship">
 <input type="date">
 <input placeholder="Occupation">
@@ -171,33 +242,31 @@ document.getElementById("dependents").innerHTML += `
 }
 
 function addEducation(){
-document.getElementById("education").innerHTML += `
-<div class="grid">
+education.innerHTML += `
+<div class="grid row">
 <input placeholder="Level">
 <input placeholder="Institute">
-<input type="number" placeholder="Year Completed">
+<input type="number" placeholder="Year">
 <input placeholder="Certificate">
 </div>`;
 }
 
 function addEmployment(){
-document.getElementById("employment").innerHTML += `
-<div class="grid">
+employment.innerHTML += `
+<div class="grid row">
 <input placeholder="Company">
 <input placeholder="Job Title">
 <input type="date">
 <input type="date">
-<input placeholder="Reason for Leaving">
+<input placeholder="Reason">
 </div>`;
 }
 
-/* ---------------- SAVE ALL ---------------- */
-
+/* ---------------- SAVE ---------------- */
 async function saveAll(){
 
-/* 1. PROFILE */
-const profile = {
-user_id: Number(userId),
+await supabase.from("employee_profiles").upsert({
+user_id: userId,
 address: address.value,
 mobile_number: mobile_number.value,
 personal_email: personal_email.value,
@@ -209,74 +278,53 @@ citizenship: citizenship.value,
 religion: religion.value,
 marital_status: marital_status.value,
 spouse_name: spouse_name.value,
-father_name: father_name.value,
-mother_name: mother_name.value,
-
 sss: sss.value,
 philhealth: philhealth.value,
 pagibig: pagibig.value,
 tin: tin.value,
-
 position: position.value,
 employee_number: employee_number.value,
 employment_status: employment_status.value,
 date_hired: date_hired.value,
-
-vacation_leave: Number(vl.value),
-sick_leave: Number(sl.value),
-emergency_leave: Number(el.value),
-birthday_leave: Number(bl.value),
-maternity_leave: Number(maternity_leave.value),
-paternity_leave: Number(paternity_leave.value),
-study_leave: Number(study_leave.value),
-
 profile_completed: true
-};
+});
 
-await supabase.from("employee_profiles").upsert(profile);
-
-/* 2. DEPENDENTS */
-document.querySelectorAll("#dependents .grid").forEach(async row=>{
-let inputs = row.querySelectorAll("input");
-
+document.querySelectorAll("#dependents .grid").forEach(async r=>{
+let i=r.querySelectorAll("input");
 await supabase.from("employee_dependents").insert({
-employee_id: userId,
-dependent_name: inputs[0].value,
-relationship: inputs[1].value,
-date_of_birth: inputs[2].value,
-occupation: inputs[3].value
+employee_id:userId,
+dependent_name:i[0].value,
+relationship:i[1].value,
+date_of_birth:i[2].value,
+occupation:i[3].value
 });
 });
 
-/* 3. EDUCATION */
-document.querySelectorAll("#education .grid").forEach(async row=>{
-let inputs = row.querySelectorAll("input");
-
+document.querySelectorAll("#education .grid").forEach(async r=>{
+let i=r.querySelectorAll("input");
 await supabase.from("employee_education").insert({
-employee_id: userId,
-education_level: inputs[0].value,
-institute: inputs[1].value,
-year_completed: inputs[2].value,
-certificate_obtained: inputs[3].value
+employee_id:userId,
+education_level:i[0].value,
+institute:i[1].value,
+year_completed:i[2].value,
+certificate_obtained:i[3].value
 });
 });
 
-/* 4. EMPLOYMENT */
-document.querySelectorAll("#employment .grid").forEach(async row=>{
-let inputs = row.querySelectorAll("input");
-
+document.querySelectorAll("#employment .grid").forEach(async r=>{
+let i=r.querySelectorAll("input");
 await supabase.from("employee_employment_history").insert({
-employee_id: userId,
-company_name: inputs[0].value,
-job_title: inputs[1].value,
-date_from: inputs[2].value,
-date_to: inputs[3].value,
-leaving_reason: inputs[4].value
+employee_id:userId,
+company_name:i[0].value,
+job_title:i[1].value,
+date_from:i[2].value,
+date_to:i[3].value,
+leaving_reason:i[4].value
 });
 });
 
-alert("All employee data saved!");
-location.href = "https://interfreight.github.io/Hr_Dashboard/";
+alert("Employee onboarding completed!");
+location.href="https://interfreight.github.io/Hr_Dashboard/";
 }
 </script>
 
