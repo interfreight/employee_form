@@ -3,204 +3,1055 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interfreight HR Employee Dashboard</title>
+
+<title>INTERFREIGHT HRMS</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
-body{background:#eef3fb;padding:20px}
-.container{max-width:1400px;margin:auto;background:#fff;border-radius:18px;padding:25px;box-shadow:0 5px 20px rgba(0,0,0,.08)}
-.header{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#1F4E9D,#4C79C8);color:#fff;padding:20px;border-radius:15px}
-.img{width:90px;height:90px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#1F4E9D}
-.section{margin-top:25px}
-.section h2{color:#1F4E9D;border-left:5px solid #F4C542;padding-left:10px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #d8d8d8;border-radius:10px}
-.dynamic-row{display:grid;grid-template-columns:repeat(4,1fr) 90px;gap:10px;margin-bottom:10px}
-.btn{padding:10px 15px;border:none;border-radius:10px;cursor:pointer}
-.add{background:#1F4E9D;color:#fff}
-.remove{background:#dc3545;color:#fff}
-.save{background:#F4C542;color:#003366;font-weight:bold;width:100%;padding:15px;font-size:16px}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f2f5fb;
+color:#333;
+}
+
+header{
+background:#4472B8;
+color:white;
+padding:20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.logo img{
+height:70px;
+}
+
+.logo h1{
+font-size:28px;
+}
+
+.container{
+width:95%;
+max-width:1400px;
+margin:auto;
+padding:30px 0;
+}
+
+.card{
+background:white;
+padding:25px;
+margin-bottom:25px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.card h2{
+color:#4472B8;
+margin-bottom:20px;
+border-left:6px solid #F5C400;
+padding-left:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.form-group{
+display:flex;
+flex-direction:column;
+}
+
+label{
+font-weight:600;
+margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+outline:none;
+}
+
+input:focus{
+border-color:#4472B8;
+}
+
+.photo{
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+.photo img{
+width:180px;
+height:180px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid #4472B8;
+margin-bottom:15px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table th{
+background:#4472B8;
+color:white;
+padding:12px;
+}
+
+table td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+.addBtn{
+background:#4472B8;
+color:white;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+transition:.3s;
+}
+
+.addBtn:hover{
+
+background:#355a96;
+
+}
+
+.deleteBtn{
+
+background:#dc3545;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+
+}
+.saveBtn{
+
+padding:20px;
+font-size:22px;
+font-weight:bold;
+background:#4472B8;
+color:white;
+border:none;
+border-radius:15px;
+cursor:pointer;
+transition:.3s;
+
+}
+
+.saveBtn:hover{
+
+background:#355a96;
+
+}
+
+@media(max-width:768px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
 </style>
+
 </head>
+
 <body>
-<div class="container">
 
-<div class="header">
-<img src="3. INTERFREIGHT COMPANY LOGO.png" alt="Interfreight Logo">
+<header>
+
+<div class="logo">
+
+<img src="logo.png">
+
 <div>
-<h1>INTERFREIGHT HR DASHBOARD</h1>
-<p>Complete Employee Profile Setup</p>
-</div>
+<h1>INTERFREIGHT HR MANAGEMENT SYSTEM</h1>
+<p>Employee Profile Management</p>
 </div>
 
-<div class="section">
-<h2>Personal Information</h2>
+</div>
+
+</header>
+
+<div class="container">
+<!-- EMPLOYEE PICTURE -->
+
+<div class="card">
+
+<h2>Employee Picture</h2>
+
+<div class="photo">
+
+<img src="https://via.placeholder.com/180" id="photoPreview">
+
+<input type="file" id="profilePhoto">
+
+</div>
+
+</div>
+
+
+<!-- PERSONAL INFORMATION -->
+
+<div class="card">
+
+<h2>👤 Personal Information</h2>
+
 <div class="grid">
-<input placeholder="Employee Number">
-<input placeholder="Full Name">
-<select><option>Male</option><option>Female</option></select>
-<input type="date">
-<input placeholder="Place of Birth">
-<input placeholder="Nationality">
-<input placeholder="Citizenship">
-<input placeholder="Religion">
-<input placeholder="Marital Status">
-<input placeholder="Spouse Name">
-<input placeholder="Father Name">
-<input placeholder="Mother Name">
-</div>
+
+<div class="form-group">
+<label>Employee Number</label>
+<input type="text" id="employee_number">
 </div>
 
-<div class="section">
-<h2>Contact Information</h2>
+<div class="form-group">
+<label>First Name</label>
+<input type="text" id="first_name">
+</div>
+
+<div class="form-group">
+<label>Middle Name</label>
+<input type="text" id="middle_name">
+</div>
+
+<div class="form-group">
+<label>Father Name</label>
+<input type="text" id="father_name">
+</div>
+
+<div class="form-group">
+<label>Mother Name</label>
+<input type="text" id="mother_name">
+</div>
+
+<div class="form-group">
+<label>Date of Birth</label>
+<input type="date" id="date_of_birth">
+</div>
+
+<div class="form-group">
+<label>Place of Birth</label>
+<input type="text" id="place_of_birth">
+</div>
+
+<div class="form-group">
+<label>Gender</label>
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Marital Status</label>
+<input type="text" id="marital_status">
+</div>
+
+<div class="form-group">
+<label>Nationality</label>
+<input type="text" id="nationality">
+</div>
+
+<div class="form-group">
+<label>Citizenship</label>
+<input type="text" id="citizenship">
+</div>
+
+<div class="form-group">
+<label>Religion</label>
+<input type="text" id="religion">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- CONTACT INFORMATION -->
+
+<div class="card">
+
+<h2>📞 Contact Information</h2>
+
 <div class="grid">
-<input placeholder="Mobile Number">
-<input placeholder="Personal Email">
-<input placeholder="Home Address">
-<input placeholder="Local Address">
-</div>
-<textarea placeholder="Permanent Address"></textarea>
+
+<div class="form-group">
+<label>Mobile Number</label>
+<input type="text" id="mobile_number">
 </div>
 
-<div class="section">
-<h2>Emergency Contact</h2>
+<div class="form-group">
+<label>Personal Email</label>
+<input type="email" id="personal_email">
+</div>
+
+<div class="form-group">
+<label>Home Address</label>
+<textarea id="home_address"></textarea>
+</div>
+
+<div class="form-group">
+<label>Local Address</label>
+<textarea id="local_address"></textarea>
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- GOVERNMENT INFORMATION -->
+
+<div class="card">
+
+<h2>🪪 Government Information</h2>
+
 <div class="grid">
-<input placeholder="Emergency Contact Name">
-<input placeholder="Emergency Contact Number">
-</div>
+
+<div class="form-group">
+<label>SSS Number</label>
+<input type="text" id="sss_number">
 </div>
 
-<div class="section">
-<h2>Employment Information</h2>
+<div class="form-group">
+<label>PhilHealth Number</label>
+<input type="text" id="philhealth_number">
+</div>
+
+<div class="form-group">
+<label>Pag-IBIG Number</label>
+<input type="text" id="pagibig_number">
+</div>
+
+<div class="form-group">
+<label>TIN Number</label>
+<input type="text" id="tin_number">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- EMERGENCY CONTACT -->
+
+<div class="card">
+
+<h2>🚨 Emergency Contact</h2>
+
 <div class="grid">
-<input placeholder="Department">
-<input placeholder="Position">
-<select><option>Regular</option><option>Probationary</option><option>Contractual</option></select>
-<input type="date">
-</div>
+
+<div class="form-group">
+<label>Contact Name</label>
+<input type="text" id="emergency_contact_name">
 </div>
 
-<div class="section">
-<h2>Government IDs</h2>
+<div class="form-group">
+<label>Contact Number</label>
+<input type="text" id="emergency_contact_number">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- EMPLOYMENT INFORMATION -->
+
+<div class="card">
+
+<h2>💼 Employment Information</h2>
+
 <div class="grid">
-<input placeholder="SSS">
-<input placeholder="PhilHealth">
-<input placeholder="Pag-IBIG">
-<input placeholder="TIN">
-</div>
+
+<div class="form-group">
+<label>Department</label>
+<input type="text" id="department">
 </div>
 
-<div class="section">
-<h2>Leave Balances</h2>
+<div class="form-group">
+<label>Position</label>
+<input type="text" id="position">
+</div>
+
+<div class="form-group">
+<label>Employment Status</label>
+<input type="text" id="employment_status">
+</div>
+
+<div class="form-group">
+<label>Date Hired</label>
+<input type="date" id="date_hired">
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- LEAVE CREDITS -->
+
+<div class="card">
+
+<h2>🏖 Leave Credits</h2>
+
 <div class="grid">
-<input type="number" placeholder="Vacation Leave">
-<input type="number" placeholder="Sick Leave">
-<input type="number" placeholder="Emergency Leave">
-<input type="number" placeholder="Birthday Leave">
-<input type="number" placeholder="Maternity Leave">
-<input type="number" placeholder="Paternity Leave">
-<input type="number" placeholder="Study Leave">
-</div>
+
+<div class="form-group">
+<label>Vacation Leave</label>
+<input type="number" id="vacation_leave">
 </div>
 
-<div class="section">
-<h2>Dependents</h2>
-<button class="btn add" onclick="addDependent()">+ Add Dependent</button>
-<div id="dependents"></div>
+<div class="form-group">
+<label>Sick Leave</label>
+<input type="number" id="sick_leave">
 </div>
 
-<div class="section">
-<h2>Educational Background</h2>
-<button class="btn add" onclick="addEducation()">+ Add Education</button>
-<div id="education"></div>
+<div class="form-group">
+<label>Emergency Leave</label>
+<input type="number" id="emergency_leave">
 </div>
 
-<div class="section">
-<h2>Employment History</h2>
-<button class="btn add" onclick="addEmployment()">+ Add Employment</button>
-<div id="employment"></div>
+<div class="form-group">
+<label>Birthday Leave</label>
+<input type="number" id="birthday_leave">
 </div>
 
-<button class="save btn" onclick="saveEmployee()">
-SAVE EMPLOYEE PROFILE
+<div class="form-group">
+<label>Maternity Leave</label>
+<input type="number" id="maternity_leave">
+</div>
+
+<div class="form-group">
+<label>Paternity Leave</label>
+<input type="number" id="paternity_leave">
+</div>
+
+<div class="form-group">
+<label>Study Leave</label>
+<input type="number" id="study_leave">
+</div>
+
+</div>
+
+</div>
+<!-- EDUCATIONAL BACKGROUND -->
+
+<div class="card">
+
+<h2>🎓 Educational Background</h2>
+
+<button class="addBtn" onclick="addEducationRow()">
++ Add Education
+</button>
+
+<table id="educationTable">
+
+<thead>
+
+<tr>
+<th>Education Level</th>
+<th>Institute</th>
+<th>Year Completed</th>
+<th>Certificate</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- DEPENDENTS -->
+
+<div class="card">
+
+<h2>👨‍👩‍👧 Dependents</h2>
+
+<button class="addBtn" onclick="addDependentRow()">
++ Add Dependent
+</button>
+
+<table id="dependentTable">
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Relationship</th>
+<th>Birth Date</th>
+<th>Occupation</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- EMPLOYMENT HISTORY -->
+
+<div class="card">
+
+<h2>🏢 Employment History</h2>
+
+<button class="addBtn" onclick="addHistoryRow()">
++ Add Employment
+</button>
+
+<table id="historyTable">
+
+<thead>
+
+<tr>
+<th>Company</th>
+<th>Job Title</th>
+<th>Date From</th>
+<th>Date To</th>
+<th>Reason For Leaving</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- SAVE BUTTON -->
+
+<div class="card">
+
+<button class="saveBtn" onclick="saveEmployee()">
+
+SAVE CHANGES
+
 </button>
 
 </div>
-
 <script>
-function addDependent(){
-let d=document.createElement('div');
-d.className='dynamic-row';
-d.innerHTML=`<input placeholder="Dependent Name"><input placeholder="Relationship"><input type="date"><input placeholder="Occupation"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
-document.getElementById('dependents').appendChild(d);
-}
-function addEducation(){
-let d=document.createElement('div');
-d.className='dynamic-row';
-d.innerHTML=`<input placeholder="Education Level"><input placeholder="Institution"><input placeholder="Year Completed"><input placeholder="Certificate"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
-document.getElementById('education').appendChild(d);
-}
-function addEmployment(){
-let d=document.createElement('div');
-d.className='dynamic-row';
-d.innerHTML=`<input placeholder="Company"><input placeholder="Job Title"><input type="date"><input type="date"><button class="remove btn" onclick="this.parentElement.remove()">Delete</button>`;
-document.getElementById('employment').appendChild(d);
-}
-addDependent();
-addEducation();
-addEmployment();
 
-  
+
+let table=document.querySelector("#educationTable tbody");
+
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+function addDependentRow(){
+
+let table=document.querySelector("#dependentTable tbody");
+
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input type="date"></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+function addHistoryRow(){
+
+let table=document.querySelector("#historyTable tbody");
+
+
+...
+}
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input type="date"></td>
+<td><input type="date"></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+document.getElementById("profilePhoto")
+.addEventListener("change",function(e){
+
+const reader=new FileReader();
+
+reader.onload=function(){
+
+document.getElementById("photoPreview").src=reader.result;
+
+}
+
+reader.readAsDataURL(e.target.files[0]);
+
+});
+
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+<script>
 
-const SUPABASE_URL =
-"https://tuihpvykuqbqnfyfepql.supabase.co";
+function addEducationRow(){
 
-const SUPABASE_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1aWhwdnlrdXFicW5meWZlcHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3Mjg4OTcsImV4cCI6MjA5NzMwNDg5N30.HZKS8CgFLjkZ-Bx2AIjFjurH3IsKjvf37Ft852CzJsQ";
+let table=document.querySelector("#educationTable tbody");
 
-const db = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+let table=document.querySelector("#dependentTable tbody");
+
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input type="date"></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+
+let table=document.querySelector("#historyTable tbody");
+
+let row=table.insertRow();
+
+row.innerHTML=`
+<td><input></td>
+<td><input></td>
+<td><input type="date"></td>
+<td><input type="date"></td>
+<td><input></td>
+<td>
+<button class="deleteBtn"
+onclick="this.parentElement.parentElement.remove()">
+Delete
+</button>
+</td>
+`;
+
+}
+
+
+
+document.getElementById("profilePhoto")
+.addEventListener("change",function(e){
+
+const reader=new FileReader();
+
+reader.onload=function(){
+
+document.getElementById("photoPreview").src=reader.result;
+
+}
+
+reader.readAsDataURL(e.target.files[0]);
+
+});
+
+</script>
+<script>
+
+async function uploadPhoto(){
+
+const file=
+document.getElementById("profilePhoto").files[0];
+
+if(!file) return "";
+
+const filename=
+Date.now()+"_"+file.name;
+
+const {data,error}=await supabaseClient
+.storage
+.from("employee-photos")
+.upload(filename,file);
+
+if(error){
+
+alert(error.message);
+return "";
+
+}
+
+const {data:urlData}=supabaseClient
+.storage
+.from("employee-photos")
+.getPublicUrl(filename);
+
+return urlData.publicUrl;
+
+}
+
+</script>
+<script>
+
 async function saveEmployee(){
-
-const inputs = document.querySelectorAll(".grid input, .grid select");
 
 try{
 
-const {data,error} = await db
-.from("employee_profiles")
-.insert({
-employee_number: inputs[0].value,
-full_name: inputs[1].value,
-gender: inputs[2].value,
-date_of_birth: inputs[3].value,
-place_of_birth: inputs[4].value,
-nationality: inputs[5].value,
-citizenship: inputs[6].value,
-religion: inputs[7].value,
-marital_status: inputs[8].value,
-spouse_name: inputs[9].value,
-father_name: inputs[10].value,
-mother_name: inputs[11].value
-});
+// MAIN PROFILE
 
+const employeeData={
+
+employee_number:document.getElementById("employee_number").value,
+first_name:document.getElementById("first_name").value,
+middle_name:document.getElementById("middle_name").value,
+father_name:document.getElementById("father_name").value,
+mother_name:document.getElementById("mother_name").value,
+date_of_birth:document.getElementById("date_of_birth").value,
+place_of_birth:document.getElementById("place_of_birth").value,
+gender:document.getElementById("gender").value,
+marital_status:document.getElementById("marital_status").value,
+nationality:document.getElementById("nationality").value,
+citizenship:document.getElementById("citizenship").value,
+religion:document.getElementById("religion").value,
+
+mobile_number:document.getElementById("mobile_number").value,
+personal_email:document.getElementById("personal_email").value,
+home_address:document.getElementById("home_address").value,
+local_address:document.getElementById("local_address").value,
+
+sss:
+document.getElementById("sss_number").value,
+philhealth:
+document.getElementById("philhealth_number").value,
+pagibig:
+document.getElementById("pagibig_number").value,
+tin:
+document.getElementById("tin_number").value,
+
+emergency_contact_name:document.getElementById("emergency_contact_name").value,
+emergency_contact_number:document.getElementById("emergency_contact_number").value,
+
+department:document.getElementById("department").value,
+position:document.getElementById("position").value,
+employment_status:document.getElementById("employment_status").value,
+date_hired:document.getElementById("date_hired").value,
+
+vacation_leave:document.getElementById("vacation_leave").value,
+sick_leave:document.getElementById("sick_leave").value,
+emergency_leave:document.getElementById("emergency_leave").value,
+birthday_leave:document.getElementById("birthday_leave").value,
+maternity_leave:document.getElementById("maternity_leave").value,
+paternity_leave:document.getElementById("paternity_leave").value,
+study_leave:document.getElementById("study_leave").value
+
+};
+
+
+const {data:existingEmployee,error} =
+await supabaseClient
+.from("employee_profiles")
+.select("*")
+.eq("employee_number",employeeData.employee_number)
+.maybeSingle();
 if(error){
-console.error(error);
 alert(error.message);
 return;
 }
 
-alert("Employee profile saved successfully!");
+let employeeId;
 
-}catch(err){
-console.error(err);
+if(existingEmployee){
+
+await supabaseClient
+
+.from("employee_profiles")
+
+.update(employeeData)
+
+.eq("id",existingEmployee.id);
+
+employeeId=existingEmployee.id;
+
+}
+else{
+
+const {data}=await supabaseClient
+
+.from("employee_profiles")
+
+.insert(employeeData)
+
+.select()
+
+.single();
+
+employeeId=data.id;
+
+}
+
+// EDUCATION
+
+let educationRows=document.querySelectorAll("#educationTable tbody tr");
+
+for(let row of educationRows){
+
+let inputs=row.querySelectorAll("input");
+
+await supabaseClient
+.from("employee_education")
+.insert({
+
+employee_id:employeeId,
+education_level:inputs[0].value,
+institute:inputs[1].value,
+year_completed:inputs[2].value,
+certificate_obtained:inputs[3].value
+
+});
+
+}
+
+
+
+// DEPENDENTS
+
+let dependentRows=document.querySelectorAll("#dependentTable tbody tr");
+
+for(let row of dependentRows){
+
+let inputs=row.querySelectorAll("input");
+
+await supabaseClient
+.from("employee_dependents")
+.insert({
+
+employee_id:employeeId,
+dependent_name:inputs[0].value,
+relationship:inputs[1].value,
+date_of_birth:inputs[2].value,
+occupation:inputs[3].value
+
+});
+
+}
+
+
+
+// EMPLOYMENT HISTORY
+
+let historyRows=document.querySelectorAll("#historyTable tbody tr");
+
+for(let row of historyRows){
+
+let inputs=row.querySelectorAll("input");
+
+await supabaseClient
+.from("employee_employment_history")
+.insert({
+
+employee_id:employeeId,
+company_name:inputs[0].value,
+job_title:inputs[1].value,
+date_from:inputs[2].value,
+date_to:inputs[3].value,
+leaving_reason:inputs[4].value
+
+});
+
+}
+
+
+alert("Employee saved successfully.");
+
+}
+catch(err){
+
 alert(err.message);
+
 }
 
 }
+
 </script>
+<div class="card">
+
+<h2>Search Employee</h2>
+
+<input
+id="searchEmployee"
+placeholder="Enter Employee Number">
+
+<button class="addBtn"
+onclick="searchEmployee()">
+
+Search
+
+</button>
+
+</div>
+<script>
+
+async function searchEmployee(){
+if(data.profile_photo){
+
+document.getElementById("photoPreview")
+.src=data.profile_photo;
+
+}
+let empNo=document
+.getElementById("searchEmployee")
+.value;
+
+
+const {data,error}=await supabaseClient
+
+.from("employee_profiles")
+
+.select("*")
+
+.eq("employee_number",empNo)
+
+.single();
+
+
+if(error){
+
+alert("Employee not found");
+
+return;
+
+}
+
+
+document.getElementById("employee_number").value=data.employee_number;
+document.getElementById("first_name").value=data.first_name;
+document.getElementById("middle_name").value=data.middle_name;
+document.getElementById("father_name").value=data.father_name;
+document.getElementById("mother_name").value=data.mother_name;
+document.getElementById("date_of_birth").value=data.date_of_birth;
+document.getElementById("place_of_birth").value=data.place_of_birth;
+document.getElementById("gender").value=data.gender;
+document.getElementById("marital_status").value=data.marital_status;
+document.getElementById("nationality").value=data.nationality;
+document.getElementById("citizenship").value=data.citizenship;
+document.getElementById("religion").value=data.religion;
+
+alert("Employee loaded.");
+
+}
+
+</script>
+</script>
+
+</div>
+
 </body>
+
 </html>
