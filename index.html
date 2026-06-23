@@ -682,25 +682,6 @@ reader.readAsDataURL(e.target.files[0]);
 
 function addEducationRow(){
 
-let table=document.querySelector("#educationTable tbody");
-
-let row=table.insertRow();
-
-row.innerHTML=`
-<td><input></td>
-<td><input></td>
-<td><input></td>
-<td><input></td>
-<td>
-<button class="deleteBtn"
-onclick="this.parentElement.parentElement.remove()">
-Delete
-</button>
-</td>
-`;
-
-}
-
 
 
 let table=document.querySelector("#dependentTable tbody");
