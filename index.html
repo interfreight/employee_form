@@ -851,20 +851,22 @@ for(let row of educationRows){
 
 let inputs=row.querySelectorAll("input");
 
-await supabaseClient
+const { data, error } = await supabaseClient
 .from("employee_education")
 .insert({
 
-employee_id:employeeId,
-education_level:inputs[0].value,
-institute:inputs[1].value,
-year_completed:inputs[2].value,
-certificate_obtained:inputs[3].value
+employee_id: employeeId,
+education_level: inputs[0].value,
+institute: inputs[1].value,
+year_completed: inputs[2].value,
+certificate_obtained: inputs[3].value
 
 });
 
+if(error){
+    console.log(error);
+    alert(error.message);
 }
-
 
 
 // DEPENDENTS
