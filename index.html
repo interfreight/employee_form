@@ -691,18 +691,14 @@ Delete
 `;
 
 }
-</script>
-<script>
 
 async function uploadPhoto(){
 
-const file=
-document.getElementById("profilePhoto").files[0];
+const file=document.getElementById("profilePhoto").files[0];
 
 if(!file) return "";
 
-const filename=
-Date.now()+"_"+file.name;
+const filename=Date.now()+"_"+file.name;
 
 const {data,error}=await supabaseClient
 .storage
@@ -710,10 +706,8 @@ const {data,error}=await supabaseClient
 .upload(filename,file);
 
 if(error){
-
 alert(error.message);
 return "";
-
 }
 
 const {data:urlData}=supabaseClient
@@ -734,50 +728,51 @@ try{
 
 // MAIN PROFILE
 
-const employeeData={
-profile_photo: await uploadPhoto(),
-employee_number:document.getElementById("employee_number").value,
-full_name:document.getElementById("full_name").value,
-father_name:document.getElementById("father_name").value,
-mother_name:document.getElementById("mother_name").value,
-date_of_birth:document.getElementById("date_of_birth").value,
-place_of_birth:document.getElementById("place_of_birth").value,
-gender:document.getElementById("gender").value,
-marital_status:document.getElementById("marital_status").value,
-nationality:document.getElementById("nationality").value,
-citizenship:document.getElementById("citizenship").value,
-religion:document.getElementById("religion").value,
+let photoUrl = "";
 
-mobile_number:document.getElementById("mobile_number").value,
-personal_email:document.getElementById("personal_email").value,
-home_address:document.getElementById("home_address").value,
-local_address:document.getElementById("local_address").value,
+if(document.getElementById("profilePhoto").files.length > 0){
+    photoUrl = await uploadPhoto();
+}
 
-sss:
-document.getElementById("sss_number").value,
-philhealth:
-document.getElementById("philhealth_number").value,
-pagibig:
-document.getElementById("pagibig_number").value,
-tin:
-document.getElementById("tin_number").value,
+const employeeData = {
+    profile_photo: photoUrl,
+    employee_number:document.getElementById("employee_number").value,
+    full_name:document.getElementById("full_name").value,
+    father_name:document.getElementById("father_name").value,
+    mother_name:document.getElementById("mother_name").value,
+    date_of_birth:document.getElementById("date_of_birth").value,
+    place_of_birth:document.getElementById("place_of_birth").value,
+    gender:document.getElementById("gender").value,
+    marital_status:document.getElementById("marital_status").value,
+    nationality:document.getElementById("nationality").value,
+    citizenship:document.getElementById("citizenship").value,
+    religion:document.getElementById("religion").value,
 
-emergency_contact_name:document.getElementById("emergency_contact_name").value,
-emergency_contact_number:document.getElementById("emergency_contact_number").value,
+    mobile_number:document.getElementById("mobile_number").value,
+    personal_email:document.getElementById("personal_email").value,
+    home_address:document.getElementById("home_address").value,
+    local_address:document.getElementById("local_address").value,
 
-department:document.getElementById("department").value,
-position:document.getElementById("position").value,
-employment_status:document.getElementById("employment_status").value,
-date_hired:document.getElementById("date_hired").value,
+    sss:document.getElementById("sss_number").value,
+    philhealth:document.getElementById("philhealth_number").value,
+    pagibig:document.getElementById("pagibig_number").value,
+    tin:document.getElementById("tin_number").value,
 
-vacation_leave:document.getElementById("vacation_leave").value,
-sick_leave:document.getElementById("sick_leave").value,
-emergency_leave:document.getElementById("emergency_leave").value,
-birthday_leave:document.getElementById("birthday_leave").value,
-maternity_leave:document.getElementById("maternity_leave").value,
-paternity_leave:document.getElementById("paternity_leave").value,
-study_leave:document.getElementById("study_leave").value
+    emergency_contact_name:document.getElementById("emergency_contact_name").value,
+    emergency_contact_number:document.getElementById("emergency_contact_number").value,
 
+    department:document.getElementById("department").value,
+    position:document.getElementById("position").value,
+    employment_status:document.getElementById("employment_status").value,
+    date_hired:document.getElementById("date_hired").value,
+
+    vacation_leave:document.getElementById("vacation_leave").value,
+    sick_leave:document.getElementById("sick_leave").value,
+    emergency_leave:document.getElementById("emergency_leave").value,
+    birthday_leave:document.getElementById("birthday_leave").value,
+    maternity_leave:document.getElementById("maternity_leave").value,
+    paternity_leave:document.getElementById("paternity_leave").value,
+    study_leave:document.getElementById("study_leave").value
 };
 
 
@@ -794,34 +789,33 @@ return;
 
 let employeeId;
 
-if(existingEmployee){
+iif(existingEmployee){
 
-await supabaseClient
+    await supabaseClient
+    .from("employee_profiles")
+    .update(employeeData)
+    .eq("id",existingEmployee.id);
 
-.from("employee_profiles")
+    employeeId = existingEmployee.id;
 
-.update(employeeData)
+}else{
 
-.eq("id",existingEmployee.id);
+    const { data, error } = await supabaseClient
+    .from("employee_profiles")
+    .insert(employeeData)
+    .select()
+    .single();
 
-employeeId=existingEmployee.id;
+    if(error){
+        alert(error.message);
+        return;
+    }
 
-}
-else{
-
-const { data, error } = await supabaseClient
-.from("employee_profiles")
-.insert(employeeData)
-.select()
-.single();
-
-if(error){
-    console.log(error);
-    alert(error.message);
-    return;
+    employeeId = data.id;
 }
 
-employeeId = data.id;
+
+alert("Employee saved successfully.");
 // EDUCATION
 
 let educationRows=document.querySelectorAll("#educationTable tbody tr");
@@ -892,7 +886,7 @@ leaving_reason:inputs[4].value
 });
 
 }
-
+      }
 
 alert("Employee saved successfully.");
 
