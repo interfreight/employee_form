@@ -789,7 +789,7 @@ return;
 
 let employeeId;
 
-iif(existingEmployee){
+if(existingEmployee){
 
     await supabaseClient
     .from("employee_profiles")
@@ -886,8 +886,7 @@ leaving_reason:inputs[4].value
 });
 
 }
-      }
-
+      
 alert("Employee saved successfully.");
 
 }
