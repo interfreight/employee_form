@@ -809,20 +809,19 @@ employeeId=existingEmployee.id;
 }
 else{
 
-const {data}=await supabaseClient
-
+const { data, error } = await supabaseClient
 .from("employee_profiles")
-
 .insert(employeeData)
-
 .select()
-
 .single();
 
-employeeId=data.id;
-
+if(error){
+    console.log(error);
+    alert(error.message);
+    return;
 }
 
+employeeId = data.id;
 // EDUCATION
 
 let educationRows=document.querySelectorAll("#educationTable tbody tr");
@@ -951,8 +950,7 @@ document.getElementById("photoPreview").src=data.profile_photo;
 }
 
 document.getElementById("employee_number").value=data.employee_number || "";
-document.getElementById("first_name").value=data.first_name || "";
-document.getElementById("middle_name").value=data.middle_name || "";
+document.getElementById("full_name").value=data.full_name || "";
 document.getElementById("father_name").value=data.father_name || "";
 document.getElementById("mother_name").value=data.mother_name || "";
 document.getElementById("date_of_birth").value=data.date_of_birth || "";
