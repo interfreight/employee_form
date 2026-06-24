@@ -250,10 +250,14 @@ src="">
 
 <div class="form-group">
 <label>Employee Number</label>
-<input type="text" id="employee_number">
+<input type="text" id="user_id">
 </div>
 
-
+<div class="form-group">
+<label>Address</label>
+<input type="text" id="address">
+</div>
+  
 <div class="form-group">
 <label>Father Name</label>
 <input type="text" id="father_name">
@@ -731,7 +735,8 @@ if(document.getElementById("profilePhoto").files.length > 0){
 
 const employeeData = {
     profile_photo: photoUrl,
-    employee_number:document.getElementById("employee_number").value,
+    user_id:document.getElementById("user_id").value,
+    address:document.getElementById("address").value,
     father_name:document.getElementById("father_name").value,
     mother_name:document.getElementById("mother_name").value,
     date_of_birth:document.getElementById("date_of_birth").value,
@@ -774,7 +779,7 @@ const {data:existingEmployee,error} =
 await supabaseClient
 .from("employee_profiles")
 .select("*")
-.eq("employee_number",employeeData.employee_number)
+.eq("user_id",employeeData.user_id)
 .maybeSingle();
 if(error){
 alert(error.message);
@@ -920,7 +925,7 @@ let empNo=document
 const {data,error}=await supabaseClient
 .from("employee_profiles")
 .select("*")
-.eq("employee_number",empNo)
+.eq("user_id",empNo)
 .single();
 
 if(error){
@@ -936,7 +941,8 @@ document.getElementById("photoPreview").src=data.profile_photo;
 
 }
 
-document.getElementById("employee_number").value=data.employee_number || "";
+document.getElementById("user_id").value=data.user_id || "";
+  document.getElementById("address").value=data.address || "";
 document.getElementById("father_name").value=data.father_name || "";
 document.getElementById("mother_name").value=data.mother_name || "";
 document.getElementById("date_of_birth").value=data.date_of_birth || "";
