@@ -253,11 +253,6 @@ src="">
 <input type="text" id="employee_number">
 </div>
 
-<div class="form-group">
-<label>Full Name</label>
-<input type="text" id="full_name">
-</div>
-
 
 <div class="form-group">
 <label>Father Name</label>
@@ -737,7 +732,6 @@ if(document.getElementById("profilePhoto").files.length > 0){
 const employeeData = {
     profile_photo: photoUrl,
     employee_number:document.getElementById("employee_number").value,
-    full_name:document.getElementById("full_name").value,
     father_name:document.getElementById("father_name").value,
     mother_name:document.getElementById("mother_name").value,
     date_of_birth:document.getElementById("date_of_birth").value,
@@ -943,7 +937,6 @@ document.getElementById("photoPreview").src=data.profile_photo;
 }
 
 document.getElementById("employee_number").value=data.employee_number || "";
-document.getElementById("full_name").value=data.full_name || "";
 document.getElementById("father_name").value=data.father_name || "";
 document.getElementById("mother_name").value=data.mother_name || "";
 document.getElementById("date_of_birth").value=data.date_of_birth || "";
