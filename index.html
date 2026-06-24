@@ -246,8 +246,15 @@ src="">
 
 <h2>👤 Personal Information</h2>
 
-<div class="grid">
+<label>User ID</label>
+<input type="text" id="user_id">
 
+<label>Full Name</label>
+<input type="text" id="full_name" readonly>
+
+<label>Email</label>
+<input type="email" id="email" readonly>mail" id="email" readonly>
+  
 <div class="form-group">
 <label>Employee Number</label>
 <input type="text" id="user_id">
@@ -690,7 +697,27 @@ Delete
 `;
 
 }
+document.getElementById("user_id").addEventListener("change", loadUser);
 
+async function loadUser(){
+
+    let userId = document.getElementById("user_id").value;
+
+    const { data, error } = await supabaseClient
+    .from("users")
+    .select("full_name,email")
+    .eq("id", userId)
+    .single();
+
+    if(error){
+        alert("User not found");
+        return;
+    }
+
+    document.getElementById("full_name").value = data.full_name;
+    document.getElementById("email").value = data.email;
+}
+  
 async function uploadPhoto(){
 
 const file=document.getElementById("profilePhoto").files[0];
@@ -896,68 +923,6 @@ alert(err.message);
 }
 
 }
-
-</script>
-<div class="card">
-
-<h2>Search Employee</h2>
-
-<input
-id="searchEmployee"
-placeholder="Enter Employee Number">
-
-<button class="addBtn"
-onclick="searchEmployee()">
-
-Search
-
-</button>
-
-</div>
-<script>
-
-async function searchEmployee(){
-
-let empNo=document
-.getElementById("searchEmployee")
-.value;
-
-const {data,error}=await supabaseClient
-.from("employee_profiles")
-.select("*")
-.eq("user_id",empNo)
-.single();
-
-if(error){
-
-alert("Employee not found");
-return;
-
-}
-
-if(data.profile_photo){
-
-document.getElementById("photoPreview").src=data.profile_photo;
-
-}
-
-document.getElementById("user_id").value=data.user_id || "";
-  document.getElementById("address").value=data.address || "";
-document.getElementById("father_name").value=data.father_name || "";
-document.getElementById("mother_name").value=data.mother_name || "";
-document.getElementById("date_of_birth").value=data.date_of_birth || "";
-document.getElementById("place_of_birth").value=data.place_of_birth || "";
-document.getElementById("gender").value=data.gender || "";
-document.getElementById("marital_status").value=data.marital_status || "";
-document.getElementById("nationality").value=data.nationality || "";
-document.getElementById("citizenship").value=data.citizenship || "";
-document.getElementById("religion").value=data.religion || "";
-
-alert("Employee loaded.");
-
-}
-
-</script>
 
 </div>
 
