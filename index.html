@@ -845,28 +845,43 @@ if(existingEmployee){
 
 // EDUCATION
 
-let educationRows=document.querySelectorAll("#educationTable tbody tr");
+// EDUCATION
+
+let educationRows = document.querySelectorAll("#educationTable tbody tr");
+
+console.log("Education Rows:", educationRows.length);
+console.log("Employee ID:", employeeId);
 
 for(let row of educationRows){
 
-let inputs=row.querySelectorAll("input");
+    let inputs = row.querySelectorAll("input");
 
-const { data, error } = await supabaseClient
-.from("employee_education")
-.insert({
+    console.log("Sending:", {
+        employee_id: employeeId,
+        education_level: inputs[0].value,
+        institute: inputs[1].value,
+        year_completed: inputs[2].value,
+        certificate_obtained: inputs[3].value
+    });
 
-employee_id: employeeId,
-education_level: inputs[0].value,
-institute: inputs[1].value,
-year_completed: inputs[2].value,
-certificate_obtained: inputs[3].value
+    const { data, error } = await supabaseClient
+    .from("employee_education")
+    .insert({
+        employee_id: employeeId,
+        education_level: inputs[0].value,
+        institute: inputs[1].value,
+        year_completed: parseInt(inputs[2].value) || null,
+        certificate_obtained: inputs[3].value
+    })
+    .select();
 
-});
+    console.log("Insert Result:", data);
+    console.log("Insert Error:", error);
 
-if(error){
-    console.log(error);
-    alert(error.message);
-}
+    if(error){
+        alert(error.message);
+        return;
+    }
 }
 // DEPENDENTS
 
